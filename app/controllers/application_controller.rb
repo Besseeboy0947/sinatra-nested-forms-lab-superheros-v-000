@@ -1,40 +1,20 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    <h1>Create a Team and Heroes!</h1>
-    <form action="/teams" method="POST">
-      <label for="team[name]">Team Name:</label>
-      <input type="text" id="team[name]" name="team[name]">
-      <br />
-      <label for="team[motto]">Team Motto:</label>
-      <input type="text" id="team[motto]" name="team[motto]">
-      <br />
-      <h2>Hero #1</h2>
-      <label for="member1_name">Hero #1 Name:</label>
-      <input type="text" id="member1_name" name="team[members][][name]">
-      <label for="member1_power">Hero #1 Power:</label>
-      <input type="text" id="member1_power" name="team[members][][power]">
-      <label for="member1_bio">Hero #1 Bio:</label>
-      <input type="text" id="member1_bio" name="team[members][][bio]">
+require 'sinatra/base'
 
-      <h2>Hero #2</h2>
-      <label for="member2_name">Hero #2 Name:</label>
-      <input type="text" id="member2_name" name="team[members][][name]">
-      <label for="member2_power">Hero #2 Power:</label>
-      <input type="text" id="member2_power" name="team[members][][power]">
-      <label for="member2_bio">Hero #2 Bio:</label>
-      <input type="text" id="member2_bio" name="team[members][][bio]">
+class App < Sinatra::Base
 
-      <h2>Hero #3</h2>
-      <label for="member3_name">Hero #3 Name:</label>
-      <input type="text" id="member3_name" name="team[members][][name]">
-      <label for="member3_power">Hero #3 Power:</label>
-      <input type="text" id="member3_power" name="team[members][][power]">
-      <label for="member3_bio">Hero #3 Bio:</label>
-      <input type="text" id="member3_bio" name="team[members][][bio]">
+    set :views, Proc.new { File.join(root, "../views/") }
 
-      <br />
-      <input type="submit" value="submit">
-    </form>
-  </body>
-</html>
+    get '/' do
+      erb :'../views/super_hero'
+    end
+
+    post '/teams' do
+      @team_name = params["team"]["name"]
+      @team_motto = params["team"]["motto"]
+      @team_members = params["team"]["members"]
+
+      erb :'../views/team'
+    end
+
+
+end
